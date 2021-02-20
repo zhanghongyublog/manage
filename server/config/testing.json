@@ -1,0 +1,14 @@
+{
+  "service": {
+    "name": "ms-ind-skills",
+    "port": 8099
+  },
+  "db": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "root",
+    "password": "Aa123456",
+    "database": "db_manage",
+    "prod": false
+  }
+}
