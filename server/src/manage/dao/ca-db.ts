@@ -1,10 +1,11 @@
 import Knex from 'knex';
 import config from 'config';
 
-const prefix = config.get('db.prod') ? 'PROD_ASSESS_' : 'TEST_ASSESS_';
+const prefix = config.get('db.prod') ? 'PROD_' : 'TEST_';
 
 export const IDENTIFIER_STOCK = prefix + 'TB_STOCK';
 export const IDENTIFIER_FUND = prefix + 'TB_FUND';
+export const IDENTIFIER_FUND_STOCK = prefix + 'TB_FUND_STOCK';
 
 export const ca_db = Knex({
   debug: true,

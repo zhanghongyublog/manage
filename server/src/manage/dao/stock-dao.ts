@@ -7,9 +7,12 @@ async function ensure() {
     console.info(`create table '${_table}' now...`);
     await ca_db.schema.createTable(_table, t => {
       t.charset('utf8mb4');
-      t.string('stockId').primary().unsigned().notNullable().comment('ID(自增)');
-      t.string('stockName', 50).unique('stock_NAME_UNIQUE').defaultTo(null).comment('评估维度名称');
+      t.string('stockNo').primary().unique('STOCK_NO_UNIQUE').notNullable().comment('股票编号');
+      t.string('stockName', 100).unique('STOCK_NAME_UNIQUE').defaultTo(null).comment('股票名称');
+      t.string('industry', 100).defaultTo(null).comment('行业');
+      t.string('comments').defaultTo(null).comment('备注');
       t.dateTime('createTime').defaultTo(ca_db.raw('current_timestamp')).comment('创建时间');
+      t.dateTime('updateTime').defaultTo(ca_db.raw('current_timestamp on update current_timestamp')).comment('更新时间');
     });
   }
   return _table;
@@ -108,21 +111,32 @@ async function del(dimensionId: number) {
   // }
 }
 
-async function get(options?) {
-  // const _table = await ensure();
-  // const _contentTable = await dimensionContent_dao.ensure();
-  // const _options = DataOptions(options, _table);
-  // try {
-  //   const _result = await ca_db
-  //     .select()
-  //     .from(_contentTable)
-  //     .rightJoin(_table, `${_table}.dimensionId`, `${_contentTable}.dimensionId`)
-  //     .where(_options);
-  //   return _result as Array<AssessmentDimensionDB>;
-  // } catch (error) {
-  //   return [];
-  // }
+async function get() {
+  const _table = await ensure();
+  try {
+    const _result = await ca_db.select().from(_table)
+    return _result;
+  } catch (error) {
+    return [];
+  }
 }
+
+// async function get(options?) {
+
+//   // const _table = await ensure();
+//   // const _contentTable = await dimensionContent_dao.ensure();
+//   // const _options = DataOptions(options, _table);
+//   // try {
+//   //   const _result = await ca_db
+//   //     .select()
+//   //     .from(_contentTable)
+//   //     .rightJoin(_table, `${_table}.dimensionId`, `${_contentTable}.dimensionId`)
+//   //     .where(_options);
+//   //   return _result as Array<AssessmentDimensionDB>;
+//   // } catch (error) {
+//   //   return [];
+//   // }
+// }
 
 async function getByIds(dimensionIds: Array<number>) {
   // const _table = await ensure();

@@ -1,13 +1,15 @@
 import Router from 'koa-router';
 
-import assessmentDimension from './stock/stock-router';
+import fund from './fund/fund-router';
+import stock from './stock/stock-router';
 
 const router = new Router();
 
-router.use(assessmentDimension.routes(), assessmentDimension.allowedMethods());
+router.use(fund.routes(), fund.allowedMethods());
+router.use(stock.routes(), stock.allowedMethods());
 
 router.get('/', async ctx => {
-  ctx.body = 'Welcome to ms-ind-skills!';
+  ctx.body = 'Welcome to fund!';
 });
 
 export { router };
